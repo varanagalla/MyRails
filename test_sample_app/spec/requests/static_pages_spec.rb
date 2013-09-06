@@ -114,13 +114,13 @@ describe "Static pages" do
     it "should have the right links on the layout" do
       visit root_path
       click_link "About"
-      should have_selector 'title', text: full_title('About Us')
+      should have_selector 'title', text: 'About Us'
       
       click_link "Help"
-      should have_selector 'title', text: full_title('Help')
+      should have_selector 'title', text: 'Help'
       
       click_link "Contact"
-      should have_selector 'title', text: full_title('Contact')
+      should have_selector 'title', text: 'Contact'
       
       click_link "Home"
       click_link "Sign up now!"
