@@ -24,12 +24,19 @@ describe "UserPages" do
       it "should not create user for invalid data" do
         expect { click_button submit }.not_to change(User, :count)
       end
+      
+      describe "after submission" do
+        before { click_button submit }
+        it { should have_content('error') }
+        it { should have_selector('title', text: 'Sign up') }
+      end
+      
     end
     
     describe "with valid information" do
       before do
-        fill_in "Name",        with: "VaraPrasad Nagalla"
-        fill_in "Email",       with: "vara.benton@gmail.com"
+        fill_in "Name",        with: "tester"
+        fill_in "Email",       with: "test@vararails.com"
         fill_in "Password",    with: "vara@ruby"
         fill_in "Confirmation",with: "vara@ruby"
       end
@@ -37,6 +44,22 @@ describe "UserPages" do
       it "should create user for valid data" do
         expect { click_button submit }.to change(User, :count).by(1)
       end
+      
+      describe "after submission" do
+        before { click_button submit }
+        it { should have_selector('title', text: 'tester') }
+        it { should have_selector('h1', text: 'tester') }
+      end
+      
+      describe "after saving the user" do
+        before { click_button submit }
+        let(:user) { User.find_by_email("test@vararails.com") }
+        
+        it { should have_selector('title', text: user.name) }
+        it { should have_selector('div.alert.alert-success', text: 'Welcome')}
+        
+      end
+      
     end
   end
 end
